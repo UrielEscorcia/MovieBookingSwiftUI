@@ -8,14 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var currentTab: TabData = .home
+    
+    init() {
+        UITabBar.appearance().isHidden = true
+    }
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            VStack(spacing: 0) {
+                TabView(selection: $currentTab) {
+                    HomeView()
+                    
+                    Text("Location")
+                        .tag(TabData.location)
+                    
+                    TicketView()
+                        .tag(TabData.ticket)
+                    
+                    Text("Category")
+                        .tag(TabData.category)
+                    
+                    Text("Profile")
+                        .tag(TabData.profile)
+                }
+                CustomTabBar(currentTab: $currentTab)
+            }
+            .ignoresSafeArea(.keyboard)
         }
-        .padding()
     }
 }
 
